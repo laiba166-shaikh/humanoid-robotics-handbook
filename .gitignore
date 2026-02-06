@@ -1,0 +1,57 @@
+# Environment Variables
+.env
+.env.local
+.env.production
+
+# API Keys & Secrets
+secrets/
+*.pem
+*.key
+credentials.json
+
+# Node.js / Docusaurus
+node_modules/
+/humanoid-textbook/build
+/humanoid-textbook/.docusaurus
+/humanoid-textbook/.cache-loader
+npm-debug.log*
+yarn-error.log*
+
+# Python / FastAPI Backend
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+rag-backend/venv/
+rag-backend/.venv/
+.pytest_cache/
+.mypy_cache/
+
+# IDEs
+.vscode/
+.idea/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Build & Distribution
+dist/
+build/
+
+# Logs
+*.log
+logs/
+
+# Databases
+*.sqlite
+*.db
+
+# Project Specific
+qdrant_data/
+uploads/
+embeddings_cache/
+
+# Reference files
+takeaways.md
+takeaways1.md

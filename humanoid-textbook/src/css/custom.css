@@ -1,0 +1,256 @@
+/**
+ * Physical AI & Humanoid Robotics Textbook
+ * Custom theme using brand color palette
+ *
+ * Color Palette:
+ * - Azure Mist: #e5f9fa (Light backgrounds)
+ * - Pacific Blue: #12b2c2 (Primary accent)
+ * - Jet Black: #212a2f (Dark backgrounds)
+ * - Stormy Teal: #24727c (Secondary accent)
+ * - Pacific Cyan: #0e8b9f (Links, interactive)
+ */
+
+/* ==================== LIGHT MODE ==================== */
+:root {
+  /* Primary colors */
+  --ifm-color-primary: #0e8b9f;           /* Pacific Cyan */
+  --ifm-color-primary-dark: #24727c;      /* Stormy Teal */
+  --ifm-color-primary-darker: #24727c;
+  --ifm-color-primary-darkest: #212a2f;   /* Jet Black */
+  --ifm-color-primary-light: #12b2c2;     /* Pacific Blue */
+  --ifm-color-primary-lighter: #12b2c2;
+  --ifm-color-primary-lightest: #e5f9fa;  /* Azure Mist */
+
+  /* Backgrounds */
+  --ifm-background-color: #ffffff;
+  --ifm-background-surface-color: #e5f9fa;
+  --ifm-navbar-background-color: #ffffff;
+  --ifm-footer-background-color: #e5f9fa;
+
+  /* Text colors */
+  --ifm-font-color-base: #212a2f;
+  --ifm-heading-color: #212a2f;
+  --ifm-link-color: #0e8b9f;
+  --ifm-link-hover-color: #24727c;
+
+  /* Code blocks */
+  --ifm-code-font-size: 95%;
+  --ifm-code-background: #e5f9fa;
+  --docusaurus-highlighted-code-line-bg: rgba(14, 139, 159, 0.1);
+
+  /* Borders and dividers */
+  --ifm-toc-border-color: #12b2c2;
+  --ifm-hr-border-color: #12b2c2;
+
+  /* Cards and containers */
+  --ifm-card-background-color: #ffffff;
+  --ifm-card-border-radius: 8px;
+}
+
+/* ==================== DARK MODE ==================== */
+[data-theme='dark'] {
+  /* Primary colors */
+  --ifm-color-primary: #12b2c2;           /* Pacific Blue */
+  --ifm-color-primary-dark: #0e8b9f;      /* Pacific Cyan */
+  --ifm-color-primary-darker: #24727c;    /* Stormy Teal */
+  --ifm-color-primary-darkest: #24727c;
+  --ifm-color-primary-light: #12b2c2;
+  --ifm-color-primary-lighter: #e5f9fa;   /* Azure Mist */
+  --ifm-color-primary-lightest: #e5f9fa;
+
+  /* Backgrounds */
+  --ifm-background-color: #212a2f;        /* Jet Black */
+  --ifm-background-surface-color: #2a363d;
+  --ifm-navbar-background-color: #212a2f;
+  --ifm-footer-background-color: #1a2024;
+
+  /* Text colors */
+  --ifm-font-color-base: #e5f9fa;         /* Azure Mist */
+  --ifm-heading-color: #ffffff;
+  --ifm-link-color: #12b2c2;              /* Pacific Blue */
+  --ifm-link-hover-color: #0e8b9f;        /* Pacific Cyan */
+
+  /* Code blocks */
+  --ifm-code-background: #2a363d;
+  --docusaurus-highlighted-code-line-bg: rgba(18, 178, 194, 0.2);
+
+  /* Borders and dividers */
+  --ifm-toc-border-color: #24727c;
+  --ifm-hr-border-color: #24727c;
+
+  /* Cards and containers */
+  --ifm-card-background-color: #2a363d;
+}
+
+/* ==================== TYPOGRAPHY ==================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --ifm-font-family-base: 'Inter', system-ui, -apple-system, sans-serif;
+  --ifm-font-family-monospace: 'JetBrains Mono', 'Fira Code', monospace;
+  --ifm-heading-font-weight: 600;
+}
+
+/* ==================== NAVBAR ==================== */
+.navbar {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.navbar__title {
+  font-weight: 700;
+}
+
+[data-theme='dark'] .navbar {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* ==================== SIDEBAR ==================== */
+.menu__link {
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.menu__link:hover {
+  background-color: rgba(18, 178, 194, 0.1);
+}
+
+.menu__link--active {
+  background-color: rgba(18, 178, 194, 0.15);
+  border-left: 3px solid var(--ifm-color-primary);
+}
+
+/* ==================== CONTENT ==================== */
+.markdown h1:first-child {
+  font-size: 2.5rem;
+}
+
+.markdown h2 {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--ifm-toc-border-color);
+}
+
+/* ==================== CODE BLOCKS ==================== */
+.prism-code {
+  border-radius: 8px;
+}
+
+code {
+  border-radius: 4px;
+  padding: 2px 6px;
+}
+
+/* ==================== ADMONITIONS ==================== */
+.admonition {
+  border-radius: 8px;
+  border-left-width: 4px;
+}
+
+/* Hardware tier callouts */
+.admonition-hardware {
+  background-color: rgba(18, 178, 194, 0.1);
+  border-color: #12b2c2;
+}
+
+/* Safety warnings */
+.admonition-caution {
+  border-color: #f0ad4e;
+}
+
+.admonition-danger {
+  border-color: #dc3545;
+}
+
+/* ==================== TABLE OF CONTENTS ==================== */
+.table-of-contents__link:hover,
+.table-of-contents__link--active {
+  color: var(--ifm-color-primary);
+}
+
+/* ==================== FOOTER ==================== */
+.footer {
+  padding: 2rem 0;
+}
+
+.footer__title {
+  color: var(--ifm-color-primary-light);
+}
+
+/* ==================== BUTTONS ==================== */
+.button--primary {
+  background-color: var(--ifm-color-primary);
+  border-color: var(--ifm-color-primary);
+}
+
+.button--primary:hover {
+  background-color: var(--ifm-color-primary-dark);
+  border-color: var(--ifm-color-primary-dark);
+}
+
+/* ==================== HERO SECTION ==================== */
+.hero {
+  background: linear-gradient(135deg, #212a2f 0%, #24727c 100%);
+  color: #e5f9fa;
+}
+
+.hero__title {
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.hero__subtitle {
+  font-size: 1.5rem;
+  opacity: 0.9;
+}
+
+/* ==================== CARDS ==================== */
+.card {
+  border: 1px solid var(--ifm-toc-border-color);
+  border-radius: 8px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* ==================== HARDWARE TIER BADGES ==================== */
+.tier-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.tier-badge--1 {
+  background-color: #28a745;
+  color: white;
+}
+
+.tier-badge--2 {
+  background-color: #12b2c2;
+  color: white;
+}
+
+.tier-badge--3 {
+  background-color: #f0ad4e;
+  color: #212a2f;
+}
+
+.tier-badge--4 {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 996px) {
+  .hero__title {
+    font-size: 2rem;
+  }
+
+  .hero__subtitle {
+    font-size: 1.25rem;
+  }
+}
