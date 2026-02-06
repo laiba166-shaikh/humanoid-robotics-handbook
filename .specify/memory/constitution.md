@@ -158,6 +158,247 @@ module: "Module Name"
 
 ---
 
+## Content Writing Standards
+
+*These standards govern every lesson, chapter overview, and module page. They ensure stakeholders — students, career-switchers, bootcamp instructors, and industry reviewers — receive consistent, high-quality technical content.*
+
+### Stakeholder Alignment
+
+| Stakeholder | What They Need | How We Serve Them |
+|-------------|----------------|-------------------|
+| CS students (beginner) | Clear foundations, no assumed robotics knowledge | Concept-first lessons, analogies to software they know |
+| Software engineers (career switch) | Fast path from existing skills to robotics | Python-first examples, map to patterns they know |
+| Bootcamp participants | Structured, time-boxed learning | Duration estimates, clear prerequisites, self-assessment |
+| ESL readers | Parseable English, no idioms | Short sentences, defined terms, consistent vocabulary |
+| Instructors/mentors | Teachable structure, assignment-ready | Learning objectives, check-your-understanding, hardware tiers |
+| Industry reviewers (hackathon judges) | Technical accuracy, professional quality | Verified code, cited sources, current ecosystem data |
+
+### Core Content Principles
+
+#### 1. Clarity Is Non-Negotiable
+
+Every sentence must be understood on the first read. If a reader has to re-read a sentence, the sentence has failed.
+
+| Rule | Rationale |
+|------|-----------|
+| One idea per sentence | Reduces cognitive load |
+| One concept per paragraph | Allows scanning and retrieval |
+| Define before you use | No forward-referencing jargon |
+| Simplest correct word | "Send" not "transmit", "use" not "leverage" |
+
+```
+BAD:  "The node leverages the pub-sub paradigm to facilitate
+       inter-process communication via DDS middleware."
+
+GOOD: "Nodes send messages to each other using publishers and
+       subscribers. Under the hood, ROS 2 uses DDS (Data
+       Distribution Service) to deliver these messages."
+```
+
+#### 2. Concrete Before Abstract
+
+Always lead with something tangible — a code snippet, a real-world analogy, or a diagram — before explaining the theory.
+
+```
+BAD:  "A ROS 2 topic is a named bus over which nodes exchange
+       typed messages using an anonymous publish-subscribe model."
+
+GOOD: "Imagine a radio channel. Anyone can broadcast on it, and
+       anyone tuned in will hear the message. A ROS 2 topic works
+       the same way — it's a named channel where nodes publish
+       and subscribe to messages."
+```
+
+**Pattern**: Example/Analogy → Definition → Details → "Why It Matters"
+
+#### 3. Respect the Reader's Time
+
+- Get to the point in the first 2 sentences of every section
+- Use bullet points and tables for scannable content
+- **Bold** key terms on first use
+- Provide duration estimates so readers can plan their study sessions
+- Never pad content — if a section can be said in 3 sentences, don't write 6
+
+#### 4. Progressive Disclosure
+
+Teach the 80% case first. Edge cases, optimizations, and advanced patterns come later or link to separate sections.
+
+| Stage | What to Include | What to Defer |
+|-------|----------------|---------------|
+| First mention | Core behavior, basic usage | Configuration options, internals |
+| Code example | Working minimum | Error handling, logging |
+| Explanation | "What it does" and "why" | "How it works internally" |
+
+#### 5. Every Concept Earns Its Place
+
+If a concept doesn't connect to something the reader will build, question whether it belongs. Within 2 paragraphs of introducing any concept, answer: **"Why does this matter to you?"**
+
+### Language Rules
+
+#### Sentence Structure
+- **Target**: 15-20 words per sentence
+- **Maximum**: 30 words — break longer sentences
+- **Paragraphs**: 3-5 sentences maximum
+- **Active voice always**: "The publisher sends a message" not "A message is sent by the publisher"
+- **Transition words**: "First," "However," "As a result," "For example," to guide the reader
+
+#### Banned Phrases
+
+These phrases undermine the reader's confidence. Remove them entirely.
+
+| Never Write | Why | Write Instead |
+|-------------|-----|---------------|
+| "Simply do X" | Nothing is simple to a beginner | "Do X" |
+| "Obviously" | If it were obvious, you wouldn't explain it | Remove or explain why |
+| "Just" | Minimizes complexity | Remove entirely |
+| "Easy" / "Trivial" | Shames readers who struggle | "Straightforward" or remove |
+| "As everyone knows" | Excludes those who don't know | State the fact directly |
+| "He/she" | Not inclusive | "They" or "the developer" |
+
+#### Technical Terminology Protocol
+1. **First use**: Write the full term with definition in bold — **Node**: an independent ROS 2 executable that performs computation
+2. **Subsequent uses**: Use the short form consistently — "node"
+3. **Acronyms**: Expand on first use — "Robot Operating System 2 (ROS 2)" then "ROS 2"
+4. **Cross-module terms**: Must match the Glossary section exactly — no synonyms
+
+### Lesson Body Structure
+
+Every lesson MUST follow this skeleton for consistency and RAG optimization:
+
+```markdown
+# Lesson X.Y: [Title]
+
+**Duration**: XX minutes
+**Hardware Tier**: Tier X (Description)
+**Layer**: LX (Layer Name)
+
+## Learning Objectives
+By the end of this lesson, you will be able to:
+- [Bloom's verb] + [measurable outcome]
+
+## [The Hook — Why This Matters]
+[2-3 sentences connecting to a real-world application or problem.
+ This section answers: "Why should I care about this?"]
+
+## [Core Section 1 — H2 Header]
+[300-500 tokens. Self-contained for RAG retrieval.
+ Descriptive header, not clever — "How Nodes Communicate"
+ not "Talking Shop"]
+
+## [Core Section 2 — H2 Header]
+[Continue pattern. Each H2 = one RAG chunk boundary.]
+
+## Key Takeaways
+[3-5 bullet points. These are the facts the RAG chatbot
+ should retrieve when asked about this lesson's topic.]
+
+## Check Your Understanding
+[3-5 self-assessment questions. Mix factual recall and
+ application questions.]
+
+## Next Steps
+[1-2 sentences pointing to the next lesson with context.]
+
+---
+**Hardware Tier X Note**: [Tier-specific alternative or guidance]
+```
+
+### Code Example Pattern
+
+Every code block MUST follow the four-part pattern:
+
+```markdown
+**What we're building**: [1 sentence — the problem this code solves]
+
+\`\`\`python
+# [filename hint: e.g., velocity_publisher.py]
+import rclpy
+from rclpy.node import Node
+from geometry_msgs.msg import Twist
+
+class VelocityPublisher(Node):
+    def __init__(self):
+        super().__init__('velocity_publisher')
+        self.publisher = self.create_publisher(Twist, '/cmd_vel', 10)
+\`\`\`
+
+**Expected output**:
+\`\`\`
+[INFO] Created publisher on topic /cmd_vel with queue size 10
+\`\`\`
+
+**What's happening**:
+- Line 6: We inherit from `Node`, the base class for all ROS 2 executables
+- Line 8: `create_publisher(msg_type, topic, queue_size)` registers on the topic
+```
+
+| Code Rule | Rationale |
+|-----------|-----------|
+| Max 40 lines per block | Longer blocks lose attention |
+| Show all imports | Never assume the reader knows them |
+| Comments explain "why", not "what" | Code shows what; comments explain reasoning |
+| Meaningful names | `velocity_publisher` not `vp` or `pub1` |
+| Filename hint in first comment | Reader knows where to save it |
+
+### Section Header Rules (Critical for RAG)
+
+Section headers directly impact RAG retrieval quality. They must be:
+
+| Rule | Example |
+|------|---------|
+| Descriptive, not clever | "How ROS 2 Nodes Communicate" not "The Art of Robot Talk" |
+| Self-contained meaning | "Installing ROS 2 on Ubuntu" not "Getting Started" |
+| Include key terms | "Publisher-Subscriber Pattern in ROS 2" not "The Pattern" |
+| No questions as H2 | Use statements: "Why Humanoids Need Balance" not "Why Do Humanoids Need Balance?" |
+
+### Engagement Patterns
+
+Use Docusaurus admonitions consistently:
+
+| Admonition | When to Use | Example |
+|------------|-------------|---------|
+| `:::tip` | Efficiency gains, shortcuts for experienced readers | "Use `ros2 topic echo` to debug messages in real-time" |
+| `:::note` | Important context that's not blocking | "ROS 2 Iron is the latest release but Humble has longer support" |
+| `:::warning` | Common mistakes | "Forgetting to source your workspace is the #1 beginner error" |
+| `:::danger` | Physical safety (motors, hardware) | "Always set joint velocity limits before running on hardware" |
+
+**Interactive prompts** within lessons:
+- **Try This** (5 min): Mini-exercise within the lesson flow
+- **Challenge** (optional): Harder exercise for advanced learners
+- **Real-World Connection**: Industry application of the concept
+
+### Content Quality Checklist
+
+Before any lesson is considered complete:
+
+**Clarity**
+- [ ] Every sentence understood on first read (read aloud test)
+- [ ] No sentence exceeds 30 words
+- [ ] No paragraph exceeds 5 sentences
+- [ ] All jargon defined on first use
+- [ ] No banned phrases ("simply", "just", "obviously", "easy")
+
+**Accuracy**
+- [ ] All code examples tested and produce expected output
+- [ ] Version numbers and CLI commands verified against current docs
+- [ ] Technical claims cite official documentation or authoritative source
+- [ ] No invented APIs or fabricated data
+
+**Structure**
+- [ ] Learning objectives use Bloom's verbs and are measurable
+- [ ] Every H2 section is 300-500 tokens (RAG-optimized)
+- [ ] H2 headers are descriptive and keyword-rich (not clever)
+- [ ] Key Takeaways present and factually accurate
+- [ ] Check Your Understanding questions test application, not just recall
+
+**Accessibility**
+- [ ] Alt text on all images describes content, not decoration
+- [ ] Tables have clear headers and don't rely on color alone
+- [ ] Code blocks have sufficient surrounding context
+- [ ] No information conveyed by color alone
+
+---
+
 ## Success Metrics
 
 | Metric | Target |
