@@ -1,0 +1,45 @@
+.details {
+  border: 1px solid var(--ifm-toc-border-color);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  background: var(--ifm-card-background-color);
+  overflow: hidden;
+}
+
+.summary {
+  padding: 1rem 1.25rem;
+  font-weight: 600;
+  font-size: 1.05rem;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--ifm-heading-color);
+}
+
+.summary::-webkit-details-marker {
+  display: none;
+}
+
+.summary::after {
+  content: '+';
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--ifm-color-primary);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+  margin-left: 1rem;
+}
+
+.details[open] .summary::after {
+  content: '−';
+}
+
+.answer {
+  padding: 0 1.25rem 1rem;
+  margin: 0;
+  line-height: 1.7;
+  color: var(--ifm-font-color-base);
+  opacity: 0.9;
+}

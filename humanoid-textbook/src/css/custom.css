@@ -172,8 +172,24 @@ code {
   padding: 2rem 0;
 }
 
+.footer--dark {
+  --ifm-footer-background-color: #212a2f;
+  background-color: #212a2f;
+  color: #e5f9fa;
+}
+
 .footer__title {
   color: var(--ifm-color-primary-light);
+}
+
+.footer__link-item {
+  color: #e5f9fa;
+  opacity: 0.85;
+}
+
+.footer__link-item:hover {
+  color: var(--ifm-color-primary-light);
+  opacity: 1;
 }
 
 /* ==================== BUTTONS ==================== */
@@ -196,6 +212,7 @@ code {
 .hero__title {
   font-size: 3rem;
   font-weight: 700;
+  color: #e5f9fa;
 }
 
 .hero__subtitle {

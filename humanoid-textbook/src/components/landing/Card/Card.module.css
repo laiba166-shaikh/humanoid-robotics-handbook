@@ -1,0 +1,43 @@
+.card {
+  padding: 1.5rem;
+  background: var(--ifm-card-background-color);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.highlighted {
+  border-color: var(--ifm-color-primary);
+  border-width: 2px;
+  box-shadow: 0 4px 16px rgba(18, 178, 194, 0.15);
+}
+
+.dimmed {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.title {
+  margin: 0 0 0.75rem;
+  font-size: 1.25rem;
+  color: var(--ifm-heading-color);
+}
+
+.body {
+  flex: 1;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--ifm-font-color-base);
+}
+
+.link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 100%;
+}
+
+.link:hover {
+  text-decoration: none;
+  color: inherit;
+}

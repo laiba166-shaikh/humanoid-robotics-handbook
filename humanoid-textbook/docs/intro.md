@@ -1,47 +1,23 @@
 ---
 sidebar_position: 1
+slug: /
 ---
 
-# Tutorial Intro
+# Welcome to Physical AI & Humanoid Robotics
 
-Let's discover **Docusaurus in less than 5 minutes**.
+This 13-week course takes you from understanding large language models to building and deploying humanoid robots that move through the physical world.
+
+## What You Will Learn
+
+Across four modules, you will progress through the complete Physical AI stack:
+
+- **Module 1 — The Robotic Nervous System**: Master ROS 2 middleware, build nodes, services, and actions for robotic control
+- **Module 2 — The Digital Twin**: Simulate humanoid robots in Gazebo and Unity with realistic physics
+- **Module 3 — The AI-Robot Brain**: Develop perception pipelines using NVIDIA Isaac for visual SLAM and navigation
+- **Module 4 — Vision-Language-Action**: Integrate large language models with ROS 2 for voice-controlled robot actions
 
 ## Getting Started
 
-Get started by **creating a new site**.
+Begin with **Module 1** to set up your development environment and build your first ROS 2 package. Every lesson includes a Tier 1 path that works with any laptop and a web browser — no special hardware required.
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
-
-### What you'll need
-
-- [Node.js](https://nodejs.org/en/download/) version 20.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
-
-## Generate a new site
-
-Generate a new Docusaurus site using the **classic template**.
-
-The classic template will automatically be added to your project after you run the command:
-
-```bash
-npm init docusaurus@latest my-website classic
-```
-
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
-
-The command also installs all necessary dependencies you need to run Docusaurus.
-
-## Start your site
-
-Run the development server:
-
-```bash
-cd my-website
-npm run start
-```
-
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
-
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
-
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+Choose your starting point from the sidebar, or jump straight into [Module 1: ROS 2](/docs/module-1-ros2).
