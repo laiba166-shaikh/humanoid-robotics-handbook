@@ -66,7 +66,7 @@
 
   /* Text colors */
   --ifm-font-color-base: #e5f9fa;         /* Azure Mist */
-  --ifm-heading-color: #ffffff;
+  --ifm-heading-color: #e5f9fa;         /* Azure Mist — avoids pure white per constitution */
   --ifm-link-color: #12b2c2;              /* Pacific Blue */
   --ifm-link-hover-color: #0e8b9f;        /* Pacific Cyan */
 
@@ -152,13 +152,13 @@ code {
   border-color: #12b2c2;
 }
 
-/* Safety warnings */
+/* Safety warnings — semantic status colors (known palette exception per constitution review) */
 .admonition-caution {
-  border-color: #f0ad4e;
+  border-color: #f0ad4e;  /* Standard warning amber — palette exception for safety semantics */
 }
 
 .admonition-danger {
-  border-color: #dc3545;
+  border-color: #dc3545;  /* Standard danger red — palette exception for safety semantics */
 }
 
 /* ==================== TABLE OF CONTENTS ==================== */
@@ -172,8 +172,24 @@ code {
   padding: 2rem 0;
 }
 
+.footer--dark {
+  --ifm-footer-background-color: #212a2f;
+  background-color: #212a2f;
+  color: #e5f9fa;
+}
+
 .footer__title {
   color: var(--ifm-color-primary-light);
+}
+
+.footer__link-item {
+  color: #e5f9fa;
+  opacity: 0.85;
+}
+
+.footer__link-item:hover {
+  color: var(--ifm-color-primary-light);
+  opacity: 1;
 }
 
 /* ==================== BUTTONS ==================== */
@@ -196,6 +212,7 @@ code {
 .hero__title {
   font-size: 3rem;
   font-weight: 700;
+  color: #e5f9fa;
 }
 
 .hero__subtitle {
@@ -225,23 +242,23 @@ code {
 }
 
 .tier-badge--1 {
-  background-color: #28a745;
+  background-color: #12b2c2;  /* Pacific Blue — beginner */
   color: white;
 }
 
 .tier-badge--2 {
-  background-color: #12b2c2;
+  background-color: #0e8b9f;  /* Pacific Cyan — intermediate */
   color: white;
 }
 
 .tier-badge--3 {
-  background-color: #f0ad4e;
-  color: #212a2f;
+  background-color: #24727c;  /* Stormy Teal — advanced */
+  color: white;
 }
 
 .tier-badge--4 {
-  background-color: #dc3545;
-  color: white;
+  background-color: #212a2f;  /* Jet Black — expert */
+  color: #e5f9fa;             /* Azure Mist for contrast */
 }
 
 /* ==================== RESPONSIVE ==================== */

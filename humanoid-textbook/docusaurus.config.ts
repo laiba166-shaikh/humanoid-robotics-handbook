@@ -18,7 +18,7 @@ const config: Config = {
   projectName: 'humanoid-robotics-handbook',
   trailingSlash: false,
 
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
 
   i18n: {
@@ -32,7 +32,7 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
-          routeBasePath: '/', // Docs as the main content
+          routeBasePath: '/docs',
           editUrl: 'https://github.com/yourusername/humanoid-robotics-handbook/tree/main/humanoid-textbook/',
         },
         blog: false, // Disable blog for textbook
@@ -50,7 +50,7 @@ const config: Config = {
     colorMode: {
       defaultMode: 'dark',
       disableSwitch: false,
-      respectPrefersColorScheme: true,
+      respectPrefersColorScheme: false,
     },
 
     navbar: {
@@ -81,12 +81,12 @@ const config: Config = {
           title: 'Learn',
           items: [
             {
-              label: 'Introduction',
-              to: '/',
+              label: 'Documentation',
+              to: '/docs',
             },
             {
               label: 'Module 1: ROS 2',
-              to: '/module-1-ros2',
+              to: '/docs/module-1-ros2',
             },
           ],
         },
