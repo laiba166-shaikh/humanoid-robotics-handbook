@@ -172,32 +172,79 @@ const FAQS: FAQItem[] = [
 
 // ── Sections ──────────────────────────────────────────────────────────
 
+function RobotSilhouette(): ReactNode {
+  return (
+    <div className={styles.robot} aria-hidden="true">
+      {/* Head */}
+      <div className={styles.robotHead}>
+        <div className={styles.robotVisor}>
+          <div className={styles.robotEyeLeft} />
+          <div className={styles.robotEyeRight} />
+        </div>
+        <div className={styles.robotAntenna} />
+      </div>
+      {/* Neck */}
+      <div className={styles.robotNeck} />
+      {/* Torso */}
+      <div className={styles.robotTorso}>
+        <div className={styles.robotCore} />
+        <div className={styles.robotChestLines}>
+          <span /><span /><span />
+        </div>
+      </div>
+      {/* Arms */}
+      <div className={styles.robotArmLeft}>
+        <div className={styles.robotForearmLeft} />
+      </div>
+      <div className={styles.robotArmRight}>
+        <div className={styles.robotForearmRight} />
+      </div>
+      {/* Legs */}
+      <div className={styles.robotLegs}>
+        <div className={styles.robotLegLeft}>
+          <div className={styles.robotShinLeft} />
+        </div>
+        <div className={styles.robotLegRight}>
+          <div className={styles.robotShinRight} />
+        </div>
+      </div>
+      {/* Ground glow */}
+      <div className={styles.robotGlow} />
+      {/* Scanning line */}
+      <div className={styles.robotScanline} />
+    </div>
+  );
+}
+
 function HeroSection(): ReactNode {
   return (
     <header className={clsx('hero', styles.hero)}>
-      <div className={clsx('container', styles.heroInner)}>
-        <span className={styles.eyebrow}>PHYSICAL AI &amp; HUMANOID ROBOTICS</span>
-        <h1 className={clsx('hero__title', styles.heroTitle)}>
-          From ChatGPT to Walking Robots
-        </h1>
-        <p className={clsx('hero__subtitle', styles.heroSubtitle)}>
-          Learn to build AI systems that move through the physical world. This
-          13-week course takes you from ROS 2 fundamentals through simulation
-          and perception to deploying humanoid robots with voice-controlled
-          intelligence.
-        </p>
-        <div className={styles.heroCtas}>
-          <Link
-            className="button button--primary button--lg"
-            to="/docs/module-1-ros2">
-            Start Learning
-          </Link>
-          <a
-            className="button button--secondary button--lg"
-            href="#modules">
-            Explore Modules
-          </a>
+      <div className={clsx('container', styles.heroLayout)}>
+        <div className={styles.heroInner}>
+          <span className={styles.eyebrow}>PHYSICAL AI &amp; HUMANOID ROBOTICS</span>
+          <h1 className={clsx('hero__title', styles.heroTitle)}>
+            From ChatGPT to Walking Robots
+          </h1>
+          <p className={clsx('hero__subtitle', styles.heroSubtitle)}>
+            Learn to build AI systems that move through the physical world. This
+            13-week course takes you from ROS 2 fundamentals through simulation
+            and perception to deploying humanoid robots with voice-controlled
+            intelligence.
+          </p>
+          <div className={styles.heroCtas}>
+            <Link
+              className="button button--primary button--lg"
+              to="/docs/module-1-ros2">
+              Start Learning
+            </Link>
+            <a
+              className="button button--secondary button--lg"
+              href="#modules">
+              Explore Modules
+            </a>
+          </div>
         </div>
+        <RobotSilhouette />
       </div>
     </header>
   );
