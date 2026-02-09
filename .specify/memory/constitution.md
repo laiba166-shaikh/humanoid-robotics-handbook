@@ -30,9 +30,14 @@ Every lesson MUST specify hardware requirements:
 ### 3. RAG-Optimized Content
 - Complete YAML frontmatter on every page (15+ fields)
 - H2-level section headers for chunk boundaries
-- 300-500 tokens per section (optimal for retrieval)
+- **Variable token ranges by section type** (optimal for retrieval):
+  - **Structural sections** (Learning Objectives, Key Takeaways, Check Your Understanding, Next Steps): 200-400 tokens
+  - **Instructional sections** (concept explanations, theory): 300-600 tokens
+  - **Code-heavy sections** (examples with explanations): 400-700 tokens
+  - **Hard limit**: No section should exceed 800 tokens
 - Consistent terminology across all lessons
 - Keywords embedded naturally for semantic search
+- See `docs/rag-implementation-guide.md` for chunking strategy
 
 ### 4. Safety-First for Physical AI
 Motor control and robot lessons MUST include:
@@ -109,7 +114,7 @@ module: "Module Name"
 4. ✅ Tier 1 path documented
 5. ✅ Code examples tested
 6. ✅ Safety warnings present (if motor control)
-7. ✅ Section lengths 300-500 tokens
+7. ✅ Section lengths within type-specific ranges (200-800 tokens, see RAG guidelines)
 
 ### Before Deployment
 1. ✅ `npm run build` succeeds
