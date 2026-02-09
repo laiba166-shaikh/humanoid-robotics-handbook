@@ -53,21 +53,21 @@ Don't have a powerful computer? No problem! All lessons include cloud-based alte
 
 Foundations of embodied intelligence and the humanoid robotics landscape. Understand why robots need to understand physics, not just language.
 
-[Start Chapter 1 →](./chapter-1-physical-ai/)
+[Start Chapter 1 →](/docs/module-1-ros2/chapter-1-physical-ai)
 
 ### Chapter 2: ROS 2 Architecture
 *Week 3 • 4 Lessons • ~4 hours*
 
 Core concepts including nodes, topics, services, and actions. Learn the building blocks that make robots tick.
 
-[Start Chapter 2 →](./chapter-2-ros2-architecture/)
+[Start Chapter 2 →](/docs/module-1-ros2/chapter-2-ros2-architecture)
 
 ### Chapter 3: Building with ROS 2
 *Weeks 4-5 • 4 Lessons • ~5 hours*
 
 Hands-on package development with Python. Build real ROS 2 applications and understand URDF for describing humanoid robots.
 
-[Start Chapter 3 →](./chapter-3-building-ros2/)
+[Start Chapter 3 →](/docs/module-1-ros2/chapter-3-building-ros2)
 
 ## What You'll Build
 
