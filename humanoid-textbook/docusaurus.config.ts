@@ -1,6 +1,6 @@
-import {themes as prismThemes} from 'prism-react-renderer';
-import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+import type { Config } from '@docusaurus/types';
+import { themes as prismThemes } from 'prism-react-renderer';
 
 const config: Config = {
   title: 'Physical AI & Humanoid Robotics',
@@ -33,7 +33,8 @@ const config: Config = {
         docs: {
           sidebarPath: './sidebars.ts',
           routeBasePath: '/docs',
-          editUrl: 'https://github.com/yourusername/humanoid-robotics-handbook/tree/main/humanoid-textbook/',
+          editUrl:
+            'https://github.com/yourusername/humanoid-robotics-handbook/tree/main/humanoid-textbook/',
         },
         blog: false, // Disable blog for textbook
         theme: {
@@ -67,7 +68,7 @@ const config: Config = {
           label: 'Start Learning',
         },
         {
-          href: 'https://github.com/yourusername/humanoid-robotics-handbook',
+          href: 'https://github.com/laiba166-shaikh/humanoid-robotics-handbook',
           label: 'GitHub',
           position: 'right',
         },
@@ -116,7 +117,7 @@ const config: Config = {
             },
             {
               label: 'GitHub',
-              href: 'https://github.com/yourusername/humanoid-robotics-handbook',
+              href: 'https://github.com/laiba166-shaikh/humanoid-robotics-handbook',
             },
           ],
         },
