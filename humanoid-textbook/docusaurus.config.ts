@@ -12,9 +12,9 @@ const config: Config = {
   },
 
   // GitHub Pages deployment config
-  url: 'https://yourusername.github.io',
+  url: 'https://laiba166-shaikh.github.io',
   baseUrl: '/humanoid-robotics-handbook/',
-  organizationName: 'yourusername', // Your GitHub username
+  organizationName: 'laiba166-shaikh', // Your GitHub username
   projectName: 'humanoid-robotics-handbook',
   trailingSlash: false,
 
@@ -34,7 +34,7 @@ const config: Config = {
           sidebarPath: './sidebars.ts',
           routeBasePath: '/docs',
           editUrl:
-            'https://github.com/yourusername/humanoid-robotics-handbook/tree/main/humanoid-textbook/',
+            'https://github.com/laiba166-shaikh/humanoid-robotics-handbook/tree/main/humanoid-textbook/',
         },
         blog: false, // Disable blog for textbook
         theme: {

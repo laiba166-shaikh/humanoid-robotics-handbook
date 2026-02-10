@@ -53,21 +53,21 @@ By the end of this module, you will be able to:
 
 Kinematics, locomotion, and manipulation for humanoid robots.
 
-[View Chapter Outline →](./chapter-1-humanoid-dev/)
+[View Chapter Outline →](/docs/module-4-vla/chapter-1-humanoid-dev/)
 
 ### Chapter 2: Conversational Robotics
 *Week 13 • 4 Lessons*
 
 Voice-to-action, speech recognition, and cognitive planning with LLMs.
 
-[View Chapter Outline →](./chapter-2-conversational/)
+[View Chapter Outline →](/docs/module-4-vla/chapter-2-conversational/)
 
 ### Chapter 3: Capstone Project
 *Final Week • 3 Lessons*
 
 The Autonomous Humanoid - your culminating project.
 
-[View Chapter Outline →](./chapter-3-capstone/)
+[View Chapter Outline →](/docs/module-4-vla/chapter-3-capstone/)
 
 ## Capstone Project: The Autonomous Humanoid
 

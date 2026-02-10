@@ -53,14 +53,14 @@ By the end of this module, you will be able to:
 
 Build and test robots in a physically accurate simulation environment.
 
-[View Chapter Outline →](./chapter-1-gazebo/)
+[View Chapter Outline →](/docs/module-2-digital-twin/chapter-1-gazebo/)
 
 ### Chapter 2: Unity Visualization
 *Week 7 • 4 Lessons*
 
 Create high-fidelity renderings and complex human-robot interaction scenarios.
 
-[View Chapter Outline →](./chapter-2-unity/)
+[View Chapter Outline →](/docs/module-2-digital-twin/chapter-2-unity/)
 
 ## What You'll Build
 

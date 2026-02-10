@@ -57,21 +57,21 @@ Isaac Sim requires an NVIDIA RTX GPU. There is no Tier 1 cloud alternative for t
 
 Photorealistic simulation and synthetic data generation.
 
-[View Chapter Outline →](./chapter-1-isaac-sim/)
+[View Chapter Outline →](/docs/module-3-isaac/chapter-1-isaac-sim/)
 
 ### Chapter 2: Isaac ROS & Perception
 *Week 9 • 3 Lessons*
 
 Hardware-accelerated perception, VSLAM, and AI-powered manipulation.
 
-[View Chapter Outline →](./chapter-2-isaac-ros/)
+[View Chapter Outline →](/docs/module-3-isaac/chapter-2-isaac-ros/)
 
 ### Chapter 3: Navigation & Deployment
 *Week 10 • 3 Lessons*
 
 Path planning for bipedal robots and sim-to-real transfer.
 
-[View Chapter Outline →](./chapter-3-deployment/)
+[View Chapter Outline →](/docs/module-3-isaac/chapter-3-deployment/)
 
 ## What You'll Build
 
