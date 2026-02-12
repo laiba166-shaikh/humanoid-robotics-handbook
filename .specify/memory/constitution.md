@@ -34,7 +34,8 @@ Every lesson MUST specify hardware requirements:
   - **Structural sections** (Learning Objectives, Key Takeaways, Check Your Understanding, Next Steps): 200-400 tokens
   - **Instructional sections** (concept explanations, theory): 300-600 tokens
   - **Code-heavy sections** (examples with explanations): 400-700 tokens
-  - **Hard limit**: No section should exceed 800 tokens
+  - **Soft limit**: Authors should target 800 tokens max per section
+  - **Ingestion safety net**: Sections exceeding 700 tokens are automatically split with overlap by the ingestion pipeline. Existing content (e.g., Module 1 code-heavy sections up to 950 tokens) is handled gracefully.
 - Consistent terminology across all lessons
 - Keywords embedded naturally for semantic search
 - See `docs/rag-implementation-guide.md` for chunking strategy
@@ -424,7 +425,7 @@ Before any lesson is considered complete:
 | Styling | Infima + Custom CSS | (No Tailwind) |
 | Backend | FastAPI | Python 3.10+ |
 | Vector DB | Qdrant Cloud | Free tier |
-| Embeddings | OpenAI | text-embedding-3-small |
+| Embeddings | Cohere | embed-english-v3.0 |
 | Database | Neon Postgres | Serverless |
 | Chat UI | OpenAI ChatKit SDK | Latest |
 | Auth | Better-Auth | (Stretch goal) |
@@ -456,10 +457,19 @@ humanoid-robotics-handbook/
 │   └── static/
 │       └── img/                 # Images and assets
 ├── rag-backend/                 # FastAPI backend
-│   ├── main.py
-│   ├── api/
-│   ├── rag/
-│   └── requirements.txt
+│   ├── app/
+│   │   ├── __init__.py
+│   │   ├── main.py              # FastAPI app, CORS, lifespan
+│   │   ├── config.py            # Settings via pydantic-settings
+│   │   ├── models/              # Pydantic domain, request, response models
+│   │   ├── api/                 # Route handlers (health, search, chat)
+│   │   ├── services/            # Business logic (embeddings, vectorstore, chat, reranker)
+│   │   ├── ingestion/           # Parser, chunker, pipeline
+│   │   └── ingest.py            # CLI entry: python -m app.ingest
+│   ├── tests/
+│   ├── .env.example
+│   ├── requirements.txt
+│   └── Procfile
 ├── .claude/skills/              # Reusable Claude Code skills
 ├── .specify/memory/             # Spec-Kit Plus (this file)
 ├── specs/                       # Feature specifications
@@ -486,8 +496,8 @@ humanoid-robotics-handbook/
 GET  /api/health          → Health check
 POST /api/search          → Semantic search
 POST /api/chat            → RAG chat
-POST /api/ingest          → Content ingestion (admin)
 ```
+### Ingestion runs via CLI: python -m app.ingest (no API endpoint)
 
 ### Response Format
 ```json
@@ -497,14 +507,14 @@ POST /api/ingest          → Content ingestion (admin)
   "error": null,
   "meta": {
     "latency_ms": 123,
-    "sources": [...]
+    "source_count": 5
   }
 }
 ```
 
 ### Error Handling
 - Always return JSON, never HTML error pages
-- Include error codes: `VALIDATION_ERROR`, `NOT_FOUND`, `RATE_LIMITED`, `INTERNAL_ERROR`
+- Include error codes: `VALIDATION_ERROR`, `NOT_FOUND`, `RATE_LIMITED`, `INTERNAL_ERROR`, `SERVICE_UNAVAILABLE`
 - Log errors with context (query, user_tier, timestamp)
 
 ### CORS
@@ -612,8 +622,6 @@ docs(readme): update deployment instructions
 
 ### Required for Backend
 ```bash
-# OpenAI
-OPENAI_API_KEY=sk-...
 
 # Qdrant Cloud
 QDRANT_URL=https://xxx.qdrant.io
@@ -621,6 +629,9 @@ QDRANT_API_KEY=...
 
 # Neon Postgres
 DATABASE_URL=postgresql://...
+
+# Cohere API Key
+COHERE_API_KEY=...
 
 # Optional
 GITHUB_PAGES_URL=https://username.github.io/humanoid-robotics-handbook

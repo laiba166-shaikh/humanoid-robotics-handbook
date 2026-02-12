@@ -1,0 +1,312 @@
+openapi: "3.1.0"
+info:
+  title: RAG Backend — Physical AI Textbook
+  version: "1.0.0"
+  description: >
+    RAG-powered search and chat API for the Physical AI & Humanoid Robotics Handbook.
+    Uses Cohere embed-english-v3.0 for embeddings, Qdrant for vector storage,
+    and Cohere Command-R for grounded answer generation with citations.
+
+servers:
+  - url: http://localhost:8000
+    description: Local development
+  - url: https://{railway-app}.up.railway.app
+    description: Railway production
+
+paths:
+  /api/health:
+    get:
+      operationId: healthCheck
+      summary: Check backend and dependency health
+      tags: [Health]
+      responses:
+        "200":
+          description: All systems healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse_HealthResponse"
+        "503":
+          description: One or more dependencies unhealthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse_HealthResponse"
+
+  /api/search:
+    post:
+      operationId: searchContent
+      summary: Semantic search across textbook content
+      tags: [Search]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchRequest"
+      responses:
+        "200":
+          description: Search results returned
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse_SearchResponse"
+        "422":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiErrorResponse"
+
+  /api/chat:
+    post:
+      operationId: chatWithTextbook
+      summary: RAG-augmented chat with textbook content
+      tags: [Chat]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChatRequest"
+      responses:
+        "200":
+          description: Chat response with citations
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse_ChatResponse"
+        "422":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiErrorResponse"
+        "503":
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiErrorResponse"
+
+components:
+  schemas:
+    # --- Request Models ---
+
+    SearchRequest:
+      type: object
+      required: [query]
+      properties:
+        query:
+          type: string
+          minLength: 1
+          maxLength: 500
+          description: Natural language search query
+        hardware_tier:
+          type: integer
+          minimum: 1
+          maximum: 4
+          default: 4
+          description: Filter results to this tier and below
+        top_k:
+          type: integer
+          minimum: 1
+          maximum: 20
+          default: 5
+          description: Number of results to return
+
+    ChatRequest:
+      type: object
+      required: [query]
+      properties:
+        query:
+          type: string
+          minLength: 1
+          maxLength: 500
+          description: User question about textbook content
+        hardware_tier:
+          type: integer
+          minimum: 1
+          maximum: 4
+          default: 4
+          description: Filter context to this tier and below
+        top_k:
+          type: integer
+          minimum: 1
+          maximum: 10
+          default: 5
+          description: Number of context chunks to retrieve
+
+    # --- Response Models ---
+
+    ApiResponse_SearchResponse:
+      type: object
+      required: [success, data, meta]
+      properties:
+        success:
+          type: boolean
+        data:
+          $ref: "#/components/schemas/SearchResponse"
+        error:
+          type: string
+          nullable: true
+        meta:
+          $ref: "#/components/schemas/ResponseMeta"
+
+    ApiResponse_ChatResponse:
+      type: object
+      required: [success, data, meta]
+      properties:
+        success:
+          type: boolean
+        data:
+          $ref: "#/components/schemas/ChatResponse"
+        error:
+          type: string
+          nullable: true
+        meta:
+          $ref: "#/components/schemas/ResponseMeta"
+
+    ApiResponse_HealthResponse:
+      type: object
+      required: [success, data, meta]
+      properties:
+        success:
+          type: boolean
+        data:
+          $ref: "#/components/schemas/HealthResponse"
+        error:
+          type: string
+          nullable: true
+        meta:
+          $ref: "#/components/schemas/ResponseMeta"
+
+    SearchResponse:
+      type: object
+      required: [results, query]
+      properties:
+        query:
+          type: string
+          description: Original query (or expanded query if expansion was applied)
+        query_expanded:
+          type: boolean
+          description: Whether query expansion was applied
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/SearchResultItem"
+
+    SearchResultItem:
+      type: object
+      required: [content, score, lesson_id, lesson_title, section_title, section_type, module, chapter, hardware_tier]
+      properties:
+        content:
+          type: string
+          description: Chunk text (preview)
+        score:
+          type: number
+          format: float
+          description: Relevance score (0-1)
+        lesson_id:
+          type: string
+        lesson_title:
+          type: string
+        section_title:
+          type: string
+        section_type:
+          type: string
+          enum: [structural, instructional, code_heavy]
+        module:
+          type: string
+        chapter:
+          type: string
+        hardware_tier:
+          type: integer
+
+    ChatResponse:
+      type: object
+      required: [answer, sources]
+      properties:
+        answer:
+          type: string
+          description: Generated answer from textbook content
+        sources:
+          type: array
+          items:
+            $ref: "#/components/schemas/ChatSource"
+          description: Citations for the answer
+
+    ChatSource:
+      type: object
+      required: [lesson_id, lesson_title, section_title, module, chapter, citation_label]
+      properties:
+        lesson_id:
+          type: string
+        lesson_title:
+          type: string
+        section_title:
+          type: string
+        module:
+          type: string
+        chapter:
+          type: string
+        citation_label:
+          type: string
+          description: "Formatted citation, e.g. [Module 1, Chapter 2, Lesson 3]"
+
+    HealthResponse:
+      type: object
+      required: [status, components]
+      properties:
+        status:
+          type: string
+          enum: [healthy, degraded, unhealthy]
+        components:
+          type: object
+          properties:
+            qdrant:
+              $ref: "#/components/schemas/ComponentHealth"
+            cohere:
+              $ref: "#/components/schemas/ComponentHealth"
+
+    ComponentHealth:
+      type: object
+      required: [status]
+      properties:
+        status:
+          type: string
+          enum: [healthy, unhealthy]
+        latency_ms:
+          type: number
+          nullable: true
+        error:
+          type: string
+          nullable: true
+
+    ResponseMeta:
+      type: object
+      properties:
+        latency_ms:
+          type: number
+          description: Total request processing time
+        source_count:
+          type: integer
+          description: Number of sources used
+
+    ApiErrorResponse:
+      type: object
+      required: [success, error]
+      properties:
+        success:
+          type: boolean
+          enum: [false]
+        error:
+          type: string
+        error_code:
+          type: string
+          enum: [VALIDATION_ERROR, NOT_FOUND, RATE_LIMITED, SERVICE_UNAVAILABLE, INTERNAL_ERROR]
+        data:
+          type: object
+          nullable: true
+        meta:
+          $ref: "#/components/schemas/ResponseMeta"
