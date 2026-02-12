@@ -6,7 +6,7 @@ An AI-native technical textbook teaching Physical AI and Humanoid Robotics — f
 
 This project is a unified textbook + chatbot system for a 13-week course on Physical AI and Humanoid Robotics. Readers learn to design, simulate, and deploy humanoid robots using ROS 2, Gazebo, NVIDIA Isaac, and Vision-Language-Action models.
 
-**Live Book**: [GitHub Pages](https://yourusername.github.io/humanoid-robotics-handbook/) (coming soon)
+**Live Book**: [GitHub Pages](https://laiba166-shaikh.github.io/humanoid-robotics-handbook/)
 
 ## Tech Stack
 
@@ -67,10 +67,15 @@ humanoid-robotics-handbook/
 │   │   └── css/custom.css       # Theme with brand color palette
 │   └── docusaurus.config.ts
 ├── rag-backend/                 # FastAPI backend (Railway)
-│   ├── main.py
-│   ├── api/                     # Endpoints (health, search, chat)
-│   ├── rag/                     # Embeddings, ingestion, retrieval
-│   └── requirements.txt
+    │   ├── app/                     # Endpoints (health, search, chat)
+    │   |    ├── api/
+    │   |    ├── ingestion/
+    │   |    ├── models/
+    │   |    ├── services/
+    │   |    ├── main.py
+    │   |    ├── ingest.py
+    │   |    ├── config.py
+    │   └── requirements.txt
 ├── .claude/
 │   ├── commands/                # Spec-Kit Plus slash commands
 │   └── skills/                  # Reusable Claude Code skills
@@ -100,7 +105,6 @@ The integrated chatbot answers questions about textbook content using Retrieval-
 GET  /api/health    → Health check
 POST /api/search    → Semantic search with tier filtering
 POST /api/chat      → RAG-augmented chat with citations
-POST /api/ingest    → Content ingestion (admin)
 ```
 
 ## Claude Code Skills
@@ -111,6 +115,8 @@ This project includes reusable skills for Claude Code:
 |-------|---------|
 | **skill-creator** | Guide for creating effective Claude Code skills |
 | **skill-validator** | Validate skills against production-level quality criteria |
+| **frontend-design** | Create distinctive, production-grade frontend interfaces with high design quality |
+| **lesson-generator** |  Generate complete, RAG-optimized lessons for technical textbooks. |
 
 ## Getting Started
 
@@ -148,7 +154,7 @@ API available at `http://localhost:8000`.
 Create a `.env` file in `rag-backend/`:
 
 ```bash
-OPENAI_API_KEY=sk-...
+COHERE_API_KEY=...
 QDRANT_URL=https://xxx.qdrant.io
 QDRANT_API_KEY=...
 DATABASE_URL=postgresql://...
