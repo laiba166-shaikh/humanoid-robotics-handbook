@@ -51,6 +51,7 @@ logs/
 qdrant_data/
 uploads/
 embeddings_cache/
+.ingestion-manifest.json
 
 # Reference files
 takeaways.md
