@@ -4,9 +4,29 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
+    # Cohere & Qdrant
     cohere_api_key: str
     qdrant_url: str
     qdrant_api_key: str
+
+    # Database
+    database_url: str
+
+    # Authentication - JWT
+    jwt_secret_key: str
+    jwt_algorithm: str = "HS256"
+    access_token_expire_minutes: int = 15
+    refresh_token_expire_days: int = 7
+
+    # Authentication - Google OAuth 2.1
+    google_client_id: str
+    google_client_secret: str
+    google_redirect_uri: str
+
+    # Frontend URL (for OAuth redirects and CORS)
+    frontend_url: str
+
+    # Application
     allowed_origins: str = "http://localhost:3000"
     collection_name: str = "humanoid-textbook"
     log_level: str = "INFO"

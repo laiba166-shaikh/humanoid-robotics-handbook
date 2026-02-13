@@ -234,7 +234,7 @@ function HeroSection(): ReactNode {
           <div className={styles.heroCtas}>
             <Link
               className="button button--primary button--lg"
-              to="/docs/module-1-ros2">
+              to="/docs">
               Start Learning
             </Link>
             <a

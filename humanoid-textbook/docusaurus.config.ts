@@ -13,7 +13,7 @@ const config: Config = {
 
   // GitHub Pages deployment config
   url: 'https://laiba166-shaikh.github.io',
-  baseUrl: '/humanoid-robotics-handbook/',
+  baseUrl: '/',
   organizationName: 'laiba166-shaikh', // Your GitHub username
   projectName: 'humanoid-robotics-handbook',
   trailingSlash: false,
@@ -62,10 +62,8 @@ const config: Config = {
       },
       items: [
         {
-          type: 'docSidebar',
-          sidebarId: 'tutorialSidebar',
-          position: 'left',
-          label: 'Start Learning',
+          type: 'custom-NavbarAuthItem',
+          position: 'right',
         },
         {
           href: 'https://github.com/laiba166-shaikh/humanoid-robotics-handbook',
