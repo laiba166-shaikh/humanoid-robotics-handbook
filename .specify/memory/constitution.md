@@ -633,6 +633,20 @@ DATABASE_URL=postgresql://...
 # Cohere API Key
 COHERE_API_KEY=...
 
+# Authentication - JWT
+JWT_SECRET_KEY=your_secret_key_min_32_chars
+JWT_ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=15
+REFRESH_TOKEN_EXPIRE_DAYS=7
+
+# Authentication - Google OAuth 2.1
+GOOGLE_CLIENT_ID=...
+GOOGLE_CLIENT_SECRET=...
+GOOGLE_REDIRECT_URI=http://localhost:8000/api/auth/google/callback
+
+# Frontend URL (for OAuth redirects and CORS)
+FRONTEND_URL=http://localhost:3000
+
 # Optional
 GITHUB_PAGES_URL=https://username.github.io/humanoid-robotics-handbook
 ```

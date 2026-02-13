@@ -4,10 +4,12 @@ from contextlib import asynccontextmanager
 import cohere
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.sessions import SessionMiddleware
 from fastapi.responses import JSONResponse
 from qdrant_client import AsyncQdrantClient
 
 from app.config import get_settings
+from app.database import Base, engine
 from app.models.responses import ApiErrorResponse, ErrorCode, ResponseMeta
 from app.services.chat import CohereChatService
 from app.services.embeddings import CohereEmbedService
@@ -27,6 +29,10 @@ async def lifespan(app: FastAPI):
         format="%(asctime)s %(levelname)s %(name)s: %(message)s",
     )
 
+    # Initialize database tables
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+
     cohere_client = cohere.AsyncClientV2(api_key=settings.cohere_api_key)
     qdrant_client = AsyncQdrantClient(
         url=settings.qdrant_url, api_key=settings.qdrant_api_key
@@ -43,6 +49,7 @@ async def lifespan(app: FastAPI):
     yield
 
     await qdrant_client.close()
+    await engine.dispose()
 
 
 app = FastAPI(
@@ -53,9 +60,18 @@ app = FastAPI(
 )
 
 settings = get_settings()
+
+# SessionMiddleware for Google OAuth state storage (must be before CORS)
+app.add_middleware(
+    SessionMiddleware,
+    secret_key=settings.jwt_secret_key,
+    session_cookie="session",
+    max_age=3600,
+)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.origins_list,
+    allow_origins=settings.origins_list + [settings.frontend_url],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -90,7 +106,9 @@ async def global_exception_handler(request: Request, exc: Exception):
 from app.api.health import router as health_router  # noqa: E402
 from app.api.search import router as search_router  # noqa: E402
 from app.api.chat import router as chat_router  # noqa: E402
+from app.auth import router as auth_router  # noqa: E402
 
 app.include_router(health_router)
 app.include_router(search_router)
 app.include_router(chat_router)
+app.include_router(auth_router, prefix="/api")
