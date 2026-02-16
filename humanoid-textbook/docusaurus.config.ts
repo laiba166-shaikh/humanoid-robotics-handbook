@@ -13,7 +13,7 @@ const config: Config = {
 
   // GitHub Pages deployment config
   url: 'https://laiba166-shaikh.github.io',
-  baseUrl: '/',
+  baseUrl: '/humanoid-robotics-handbook/',
   organizationName: 'laiba166-shaikh', // Your GitHub username
   projectName: 'humanoid-robotics-handbook',
   trailingSlash: false,

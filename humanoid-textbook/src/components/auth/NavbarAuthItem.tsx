@@ -1,4 +1,5 @@
 import { useAuth } from '@site/src/components/auth/AuthProvider';
+import { FRONTEND_URL } from '@site/src/config';
 import styles from './NavbarAuthItem.module.css';
 
 export default function NavbarAuthItem(): JSX.Element {
@@ -6,7 +7,7 @@ export default function NavbarAuthItem(): JSX.Element {
 
   const handleLogout = async () => {
     await logout();
-    window.location.href = '/';
+    window.location.href = FRONTEND_URL; // Redirect to homepage after logout
   };
 
   if (isLoading) {

@@ -13,4 +13,4 @@ export const API_URL: string =
 export const FRONTEND_URL: string =
   (typeof window !== 'undefined' &&
     (window as any).__DOCUSAURUS_FRONTEND_URL__) ||
-  'http://localhost:3000';
+  'http://localhost:3000/humanoid-robotics-handbook';
