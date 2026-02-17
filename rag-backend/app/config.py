@@ -23,6 +23,11 @@ class Settings(BaseSettings):
     google_client_secret: str
     google_redirect_uri: str
 
+    # OpenAI (for Agents SDK orchestration)
+    gemini_api_key: str = ""
+    openai_api_key: str = ""
+    chatbot_base_url: str = "https://generativelanguage.googleapis.com/v1beta/openai/"
+
     # Frontend URL (for OAuth redirects and CORS)
     frontend_url: str
 
