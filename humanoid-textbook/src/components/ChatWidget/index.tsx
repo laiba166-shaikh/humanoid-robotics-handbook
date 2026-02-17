@@ -2,6 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import { useColorMode } from '@docusaurus/theme-common';
 import { ChatKit, useChatKit } from '@openai/chatkit-react';
+import { MessageCircle, X } from 'lucide-react';
 import { useAuth } from '@site/src/components/auth/AuthProvider';
 import { API_URL } from '@site/src/config';
 import styles from './ChatWidget.module.css';
@@ -69,7 +70,7 @@ function ChatWidgetInner() {
         aria-label={isOpen ? 'Close chat' : 'Open chat assistant'}
         title={isOpen ? 'Close chat' : 'Ask the textbook'}
       >
-        {isOpen ? '\u2715' : '\uD83D\uDCAC'}
+        {isOpen ? <X size={22} /> : <MessageCircle size={22} />}
       </button>
 
       {isOpen && (
@@ -81,7 +82,7 @@ function ChatWidgetInner() {
               onClick={() => setIsOpen(false)}
               aria-label="Close chat"
             >
-              &times;
+              <X size={18} />
             </button>
           </div>
           <div className={styles.chatBody}>

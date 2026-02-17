@@ -32,6 +32,7 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
+          sidebarCollapsed: false,
           routeBasePath: '/docs',
           editUrl:
             'https://github.com/laiba166-shaikh/humanoid-robotics-handbook/tree/main/humanoid-textbook/',

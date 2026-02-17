@@ -1,6 +1,7 @@
 import { useHistory } from '@docusaurus/router';
 import GoogleLoginButton from '@site/src/components/auth/GoogleLoginButton';
 import { API_URL, FRONTEND_URL } from '@site/src/config';
+import { Eye, EyeOff } from 'lucide-react';
 import React, { useState } from 'react';
 import styles from '../../components/auth/auth.module.css';
 
@@ -133,7 +134,7 @@ export default function SignupPage(): JSX.Element {
                 onClick={() => setShowPassword(!showPassword)}
                 disabled={isLoading}
               >
-                {showPassword ? '👁️' : '👁️‍🗨️'}
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
             </div>
             {errors.password && (
