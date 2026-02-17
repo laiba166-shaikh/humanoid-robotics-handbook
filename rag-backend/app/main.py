@@ -1,21 +1,27 @@
 import logging
+import os
 from contextlib import asynccontextmanager
 
 import cohere
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response, StreamingResponse
 from qdrant_client import AsyncQdrantClient
 
+from chatkit.server import StreamingResult
+
 from app.config import get_settings
-from app.database import Base, engine
+from app.auth.security import decode_token
+from app.database import Base, engine, async_session
 from app.models.responses import ApiErrorResponse, ErrorCode, ResponseMeta
 from app.services.chat import CohereChatService
 from app.services.embeddings import CohereEmbedService
 from app.services.query import QueryExpander
 from app.services.reranker import CohereRerankService
 from app.services.vectorstore import QdrantService
+from app.chatkit.store import PostgresStore
+from app.chatkit.server import TextbookChatKitServer
 
 logger = logging.getLogger(__name__)
 
@@ -45,6 +51,25 @@ async def lifespan(app: FastAPI):
     app.state.query_expander = QueryExpander()
 
     await app.state.vectorstore.ensure_collection()
+
+    # Initialize ChatKit server (requires GEMINI_API_KEY /OPENAI_API_KEY for Agents SDK)
+    if settings.gemini_api_key:
+        print('gemini')
+        os.environ.setdefault("GEMINI_API_KEY", settings.gemini_api_key)
+
+        chatkit_store = PostgresStore(session_factory=async_session)
+        app.state.chatkit_server = TextbookChatKitServer(store=chatkit_store)
+        logger.info("ChatKit server initialized")
+    elif settings.openai_api_key:
+        print('openai')
+        os.environ.setdefault("OPENAI_API_KEY", settings.openai_api_key)
+
+        chatkit_store = PostgresStore(session_factory=async_session)
+        app.state.chatkit_server = TextbookChatKitServer(store=chatkit_store)
+        logger.info("ChatKit server initialized")
+    else:
+        app.state.chatkit_server = None
+        logger.warning("API_KEY not set — ChatKit server disabled")
 
     yield
 
@@ -101,6 +126,34 @@ async def global_exception_handler(request: Request, exc: Exception):
         error_code=ErrorCode.INTERNAL_ERROR,
     )
     return JSONResponse(status_code=500, content=error_response.model_dump(mode="json"))
+
+
+@app.post("/chatkit")
+async def chatkit_endpoint(request: Request):
+    print("====Received request at /chatkit:==== ",request)  # Debug log to confirm endpoint is hit
+    """ChatKit protocol endpoint — handles thread management, messages, and streaming."""
+    server = request.app.state.chatkit_server
+    if not server:
+        return JSONResponse(
+            status_code=503,
+            content={"error": "ChatKit server not available. Check OPENAI_APqI_KEY."},
+        )
+
+    # Extract user_id from JWT (optional — anonymous fallback)
+    user_id = "anonymous"
+    auth_header = request.headers.get("authorization", "")
+    if auth_header.startswith("Bearer "):
+        token = auth_header[7:]
+        decoded_user_id = decode_token(token)
+        if decoded_user_id:
+            user_id = decoded_user_id
+
+    context = {"user_id": user_id, "app_state": request.app.state}
+
+    result = await server.process(await request.body(), context=context)
+    if isinstance(result, StreamingResult):
+        return StreamingResponse(result, media_type="text/event-stream")
+    return Response(content=result.json, media_type="application/json")
 
 
 from app.api.health import router as health_router  # noqa: E402
