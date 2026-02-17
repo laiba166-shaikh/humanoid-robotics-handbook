@@ -496,8 +496,12 @@ humanoid-robotics-handbook/
 GET  /api/health          → Health check
 POST /api/search          → Semantic search
 POST /api/chat            → RAG chat
+POST /chatkit             → ChatKit protocol (SSE streaming + JSON, see exception below)
 ```
 ### Ingestion runs via CLI: python -m app.ingest (no API endpoint)
+
+### Protocol Exception: `/chatkit`
+The `/chatkit` endpoint uses the ChatKit SDK protocol (not the standard JSON envelope). It returns SSE streams for message responses and raw JSON for thread/item operations. This is by design per ADR-001. All `/api/*` endpoints continue to use the standard JSON envelope format.
 
 ### Response Format
 ```json
@@ -643,6 +647,9 @@ REFRESH_TOKEN_EXPIRE_DAYS=7
 GOOGLE_CLIENT_ID=...
 GOOGLE_CLIENT_SECRET=...
 GOOGLE_REDIRECT_URI=http://localhost:8000/api/auth/google/callback
+
+# OpenAI (for Agents SDK — orchestrates tool calls, actual RAG uses Cohere)
+OPENAI_API_KEY=...
 
 # Frontend URL (for OAuth redirects and CORS)
 FRONTEND_URL=http://localhost:3000
