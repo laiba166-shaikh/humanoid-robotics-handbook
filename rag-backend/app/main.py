@@ -1,6 +1,7 @@
 import logging
 import os
 from contextlib import asynccontextmanager
+from urllib.parse import urlparse
 
 import cohere
 from fastapi import FastAPI, Request
@@ -94,9 +95,20 @@ app.add_middleware(
     max_age=3600,
 )
 
+# Build CORS origins: include explicit list + frontend_url + its base origin (scheme+host only)
+# The browser always sends Origin as scheme+host (no path), so we must include the base origin
+# extracted from FRONTEND_URL even when it contains a path like /humanoid-robotics-handbook.
+_parsed = urlparse(settings.frontend_url)
+_frontend_base_origin = f"{_parsed.scheme}://{_parsed.netloc}" if _parsed.netloc else ""
+_allowed_origins = list({
+    *settings.origins_list,
+    settings.frontend_url,
+    _frontend_base_origin,
+} - {""})
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.origins_list + [settings.frontend_url],
+    allow_origins=_allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
