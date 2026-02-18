@@ -11,6 +11,16 @@ const config: Config = {
     v4: true,
   },
 
+  // Build-time env vars injected into the browser via clientModules/setApiUrl.ts
+  customFields: {
+    apiUrl: process.env.API_URL ?? 'http://localhost:8000',
+    frontendUrl:
+      process.env.FRONTEND_URL ??
+      'http://localhost:3000/humanoid-robotics-handbook',
+  },
+
+  clientModules: ['./src/clientModules/setApiUrl.ts'],
+
   // GitHub Pages deployment config
   url: 'https://laiba166-shaikh.github.io',
   baseUrl: '/humanoid-robotics-handbook/',
