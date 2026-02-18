@@ -106,6 +106,8 @@ _allowed_origins = list({
     _frontend_base_origin,
 } - {""})
 
+print(f"[CORS] allowed_origins={_allowed_origins}", flush=True)
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=_allowed_origins,
