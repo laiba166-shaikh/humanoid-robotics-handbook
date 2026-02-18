@@ -1,10 +1,10 @@
-import React, { useState, useCallback, useEffect } from 'react';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import { useColorMode } from '@docusaurus/theme-common';
 import { ChatKit, useChatKit } from '@openai/chatkit-react';
-import { MessageCircle, X } from 'lucide-react';
 import { useAuth } from '@site/src/components/auth/AuthProvider';
 import { API_URL } from '@site/src/config';
+import { MessageCircle, X } from 'lucide-react';
+import { useCallback, useEffect, useState } from 'react';
 import styles from './ChatWidget.module.css';
 
 const CHATKIT_CDN = 'https://cdn.platform.openai.com/deployments/chatkit/chatkit.js';
@@ -113,7 +113,7 @@ function ChatKitEmbed({ apiUrl, customFetch, colorMode }: ChatKitEmbedProps) {
     api: {
       url: apiUrl,
       fetch: customFetch,
-      domainKey: 'local-dev',
+      domainKey: 'domain_pk_69964d1325248194a783422c1786c1500b6986fe7bf1bb9e',
     },
     history: {
       enabled: true,
