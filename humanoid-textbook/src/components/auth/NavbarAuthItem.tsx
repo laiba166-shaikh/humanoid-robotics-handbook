@@ -1,9 +1,11 @@
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import { useAuth } from '@site/src/components/auth/AuthProvider';
 import { FRONTEND_URL } from '@site/src/config';
 import styles from './NavbarAuthItem.module.css';
 
 export default function NavbarAuthItem(): JSX.Element {
   const { user, isAuthenticated, logout, isLoading } = useAuth();
+  const loginUrl = useBaseUrl('/auth/login');
 
   const handleLogout = async () => {
     await logout();
@@ -16,7 +18,7 @@ export default function NavbarAuthItem(): JSX.Element {
 
   if (!isAuthenticated || !user) {
     return (
-      <a href="auth/login" className={styles.loginLink}>
+      <a href={loginUrl} className={styles.loginLink}>
         Log In
       </a>
     );

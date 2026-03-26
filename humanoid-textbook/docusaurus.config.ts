@@ -42,6 +42,7 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
+          sidebarCollapsible: false,
           sidebarCollapsed: false,
           routeBasePath: '/docs',
           editUrl:
